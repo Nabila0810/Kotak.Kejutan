@@ -1,0 +1,108 @@
+body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.chest-box {
+    position: relative;
+    width: 250px;
+    height: 150px;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+.chest-base {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #6a4c2f;
+    border: 5px solid #3d2c1f;
+    border-radius: 10px;
+    bottom: 0;
+    transform: rotateX(15deg);
+}
+
+.chest-lid {
+    position: absolute;
+    width: 110%;
+    height: 50px;
+    background: #8b5e3d;
+    border: 5px solid #3d2c1f;
+    border-radius: 10px;
+    top: -20px;
+    left: -5%;
+    transform-origin: bottom;
+    transform: rotateX(0deg);
+    transition: transform 0.5s ease-in-out;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.chest-box.open .chest-lid {
+    transform: rotateX(-90deg);
+}
+
+#openButton {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 3rem;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+#openButton:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.diamond {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    opacity: 0;
+    animation: burst 1s forwards;
+}
+
+.blue {
+    background: linear-gradient(to top right, #007bff, #0056b3);
+    box-shadow: 0 0 10px #007bff;
+}
+
+.black {
+    background: linear-gradient(to top right, #333, #000);
+    box-shadow: 0 0 10px #333;
+}
+
+@keyframes burst {
+    0% {
+        transform: translate(0, 0) rotate(45deg) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x), var(--y)) rotate(45deg) scale(1);
+        opacity: 0;
+    }
+}
