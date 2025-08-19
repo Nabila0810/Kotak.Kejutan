@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const openButton = document.getElementById('openButton');
     const chestBox = document.getElementById('chestBox');
 
+    // Fungsi untuk membuat partikel debu
     function createDust() {
         const dustCount = 20;
         for (let i = 0; i < dustCount; i++) {
@@ -26,50 +27,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     openButton.addEventListener('click', () => {
         chestBox.classList.add('open');
-        setTimeout(createTreasure, 500);
+        
+        // Panggil fungsi untuk membuat kembang api
+        setTimeout(createFireworks, 500);
 
+        // Hapus kelas 'open' setelah animasi selesai
         setTimeout(() => {
             chestBox.classList.remove('open');
         }, 1500);
     });
 
-    function createTreasure() {
-        const itemCount = 50;
-        const itemTypes = ['coin', 'gem', 'gem', 'gem']; // Atur probabilitas item
-        const gemColors = ['red', 'blue', 'green'];
-
-        for (let i = 0; i < itemCount; i++) {
-            const item = document.createElement('div');
-            const itemType = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+    // Fungsi untuk membuat dan menghamburkan kembang api
+    function createFireworks() {
+        const particleCount = 100;
+        const colors = ['#ff69b4', '#00bfff']; // Pink dan Biru
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            particle.classList.add('firework-particle');
             
-            item.classList.add('treasure-item');
+            // Set warna partikel
+            particle.style.backgroundColor = randomColor;
 
-            if (itemType === 'coin') {
-                item.classList.add('coin');
-            } else if (itemType === 'gem') {
-                const randomColor = gemColors[Math.floor(Math.random() * gemColors.length)];
-                item.classList.add('gem', randomColor);
-            }
-
+            // Posisi awal dari tengah kotak
             const chestRect = chestBox.getBoundingClientRect();
             const startX = chestRect.left + chestRect.width / 2;
             const startY = chestRect.top + chestRect.height / 2;
             
-            item.style.left = `${startX}px`;
-            item.style.top = `${startY}px`;
+            particle.style.left = `${startX}px`;
+            particle.style.top = `${startY}px`;
 
+            // Hitung arah hamburan acak
             const angle = Math.random() * Math.PI * 2;
             const distance = Math.random() * 200 + 50;
             const endX = startX + distance * Math.cos(angle);
             const endY = startY + distance * Math.sin(angle);
 
-            item.style.setProperty('--x', `${endX - startX}px`);
-            item.style.setProperty('--y', `${endY - startY}px`);
+            // Gunakan transform untuk animasi
+            particle.style.setProperty('--x', `${endX - startX}px`);
+            particle.style.setProperty('--y', `${endY - startY}px`);
 
-            document.body.appendChild(item);
+            document.body.appendChild(particle);
             
+            // Hapus elemen setelah animasi selesai
             setTimeout(() => {
-                item.remove();
+                particle.remove();
             }, 1000);
         }
     }
